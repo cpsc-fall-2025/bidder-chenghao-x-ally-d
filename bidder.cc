@@ -39,16 +39,15 @@ std::string GetStrategy() {
 //   - The sum of all bids must not exceed 'budget'.
 //   - Bids must be non-negative integers.
 void GenerateBids(int rounds, int budget, std::string output_filename) {
-  std::vector<int> bids = {5, 0, 5, 25, 15, 15, 15, 15, 5, 0};
   std::ofstream output_file(output_filename);
-  int total_bid = 0;
+  int bid_amount = budget / (rounds / 2);
   for (int i = 0; i < rounds; i++) {
-    output_file << bids[i] << '\n';
-    if (total_bid += bids[i]; total_bid > budget) {
-      break;
+    if (i % 2 == 0) {
+      output_file << 0 << '\n';
+    } else {
+      output_file << bid_amount << '\n';
     }
   }
-
 }
 
 // ============================================================================
@@ -57,7 +56,36 @@ void GenerateBids(int rounds, int budget, std::string output_filename) {
 // This function will be ignored by the "make test" command.
 // ============================================================================
 int main() {
-  GenerateBids(10, 100, "test_output.txt");
+  int rounds = 20;
+  int budget = 1500;
+  /*
+  std::vector<int> opponent_bids(rounds, (budget / rounds));
+  
+  std::vector<int> our_bids;
+  int bid_amount = budget / (rounds / 2);
+  for (int i = 0; i < rounds; i++) {
+    if (i % 2 == 0) {
+      our_bids.push_back(0);
+    } else {
+      our_bids.push_back(bid_amount);
+    }
+  }
+  std::ofstream strategy_file("we vs. opponent.txt");
+  for (int i = 0; i < rounds; i++) {
+    strategy_file << "Round " << (i + 1) << ": ";
+    strategy_file << "Our bid: " << our_bids[i] << ", ";
+    strategy_file << "Opponent bid: " << opponent_bids[i] << " - ";
+    
+    if (our_bids[i] > opponent_bids[i]) {
+      strategy_file << "WE WIN" << '\n';
+    } else if (our_bids[i] < opponent_bids[i]) {
+      strategy_file << "OPPONENT WINS" << '\n';
+    } else {
+      strategy_file << "TIE" << '\n';
+    }
+  }
+  */
+  GenerateBids(rounds, budget, "test_output.txt");
   
   return 0;
 }
